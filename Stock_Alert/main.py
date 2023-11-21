@@ -2,8 +2,8 @@ from request import Request
 from decimal import Decimal
 import os
 
-STOCK_SYMBOL = "MPW"
-COMPANY_NAME = "Medical Properties Trust"
+STOCK_SYMBOL = "OTLY"
+COMPANY_NAME = "Oatly"
 
 STOCK_ENDPOINT = "https://www.alphavantage.co/query"
 stock_api_key = os.environ.get("STOCK_API_KEY")
@@ -19,15 +19,15 @@ stock_params = {
     "apikey": stock_api_key
 }
 
-stock_response = Request(STOCK_ENDPOINT).make(stock_params)
+stock_response = Request(STOCK_ENDPOINT).make(stock_params).json()
 
 # When using a wrong API key for the API endpoint of Alpha Vantage,
 # it currently returns still the status code 200.
 # The following workaround catches the wrong input as long as the stock_response contains the key 'Error Message'.
-if 'Error Message' in stock_response.json():
-    raise Exception(f"{stock_response.json()['Error Message']}")
+if 'Error Message' in stock_response:
+    raise KeyError(f"{stock_response['Error Message']}")
 else:
-    stock_data = stock_response.json()["Time Series (Daily)"]
+    stock_data = stock_response["Time Series (Daily)"]
 
 # Get hold of the actual yesterday's stock_data (independent of the actual date).
     data_list = list(stock_data.values())
@@ -56,9 +56,10 @@ else:
             "sortBy": "publishedAt",
         }
 
-        news_response = Request(NEWS_ENDPOINT).make(news_params)
+        news_response = Request(NEWS_ENDPOINT).make(news_params).json()
 
-        articles = news_response.json()["articles"][:3]
+
+        articles = news_response["articles"][:3]
         list_articles = [f"Headline: {article['title']}\nBrief: {article['description']}\n"
                          f"Read the full article here: {article['url']}" for article in articles]
         print(f"{list_articles[0]}\n\n{list_articles[1]}\n\n{list_articles[2]}")
