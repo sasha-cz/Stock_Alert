@@ -1,15 +1,12 @@
 from request import Request
+from news_request import get_news_data, show_latest_articles, COMPANY_NAME
 from decimal import Decimal
 import os
 
 STOCK_SYMBOL = "OTLY"
-COMPANY_NAME = "Oatly"
-
 STOCK_ENDPOINT = "https://www.alphavantage.co/query"
-stock_api_key = os.environ.get("STOCK_API_KEY")
 
-NEWS_ENDPOINT = "https://newsapi.org/v2/everything"
-news_api_key = os.environ.get("NEWS_API_KEY")
+stock_api_key = os.environ.get("STOCK_API_KEY")
 
 # Get hold of the API endpoint of Alphavantage.
 stock_params = {
@@ -29,10 +26,12 @@ if 'Error Message' in stock_response:
 else:
     stock_data = stock_response["Time Series (Daily)"]
 
-# Get hold of the actual yesterday's stock_data (independent of the actual date).
+# Get hold of yesterday's stock_data (independent of the actual date).
     data_list = list(stock_data.values())
     yesterday_data = data_list[0]
     day_before_yesterday_data = data_list[1]
+
+# (after the structure of the requested data)
 
 # Get hold of the closing price of yesterday and the day before yesterday.
     price_yesterday = yesterday_data["4. close"]
@@ -48,21 +47,8 @@ else:
 # If the stock price increases/decreases by 5% between yesterday and the day before yesterday,
 # then get the latest three news articles.
     if percentage >= 5 or percentage <= -5:
-
-        news_params = {
-            "apiKey": news_api_key,
-            "qInTitle": COMPANY_NAME,
-            "language": "en",
-            "sortBy": "publishedAt",
-        }
-
-        news_response = Request(NEWS_ENDPOINT).make(news_params).json()
-
-
-        articles = news_response["articles"][:3]
-        list_articles = [f"Headline: {article['title']}\nBrief: {article['description']}\n"
-                         f"Read the full article here: {article['url']}" for article in articles]
-        print(f"{list_articles[0]}\n\n{list_articles[1]}\n\n{list_articles[2]}")
+        get_news_data()
+        print(show_latest_articles())
 
 
 # You can modify this code using the 'smtplib' module and store the code in a cloud (e.g. pythonanywhere)
