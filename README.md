@@ -1,6 +1,8 @@
 # Stock_Alert
 
-The goal of this project was to build a simple Stock Alert written in Python, which can be also extended by code for sending  e-mail alerts (see the hashed code example at the end of main.py). To automate this program as an e-mail stock alert, you need to host it in the cloud (e.g. pythonanywhere).
+The goal of this project was to develop a stock alert program using Python that calculates the percentage change in a stock's value. The percentage change is determined by comparing yesterday's closing price to the closing price two days ago. If the stock's value increases or decreases by more than 5%, the program will output the three latest news articles about the corresponding company. 
+
+The program can be also extended by code for sending e-mail alerts (see the hashed code example at the end of main.py). To automate this program as an e-mail stock alert, you need to host it in the cloud (e.g. pythonanywhere).
 
 ## Step One: Get your API Keys
 
@@ -17,8 +19,7 @@ The required symbol is the symbol of the equity of your choice. For example: `sy
 
 ## Step Three: Run main.py 
 
-Run main.py to obtain the percentage change that your stock increased / decreased. The percentage reflects the difference between yesterday's closing price and the previous closing price from the day before. 
-If the stock increases/decreases more than 5 %, the three latest news about the company will be displayed.
+Run main.py to obtain the percentage change that your stock increased / decreased and receive eventually the latest news.
 
 
 
