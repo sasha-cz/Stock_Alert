@@ -12,13 +12,13 @@ For generating an API key for the variable `news_api_key` visit https://newsapi.
 
 ## Step Two: Choose a Company and their Symbol 
 
-In main.py customize the global variables `STOCK_SYMBOL` and `COMPANY_NAME`. 
-The required symbol is the symbol of the equity of your choice. For example: `symbol=IBM`. You can find the symbol for your equity e.g. at https://www.tradingview.com/markets/.
+Customize the global variables `STOCK_SYMBOL` (in main.py) and `COMPANY_NAME` (in news_request.py). 
+The required symbol is the symbol of the equity of your choice. For example: `symbol=IBM`. You can find the symbol for your equity e.g. here: [https://www.tradingview.com/markets/](https://www.tradingview.com/markets/).
 
 ## Step Three: Run main.py 
 
-Run main.py to get hold of the current difference of yesterday's closing price of your stock and the previous closing price (in percentage). 
-If your stock increases/decreases by 5 % or more, get the three latest news about the company.
+Run main.py to obtain the percentage change that your stock increased / decreased. The percentage reflects the difference between yesterday's closing price and the previous closing price from the day before. 
+If the stock increases/decreases more than 5 %, the three latest news about the company will be displayed.
 
 
 
