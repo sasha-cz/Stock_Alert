@@ -7,10 +7,10 @@ STOCK_SYMBOL = "OTLY"
 STOCK_ENDPOINT = "https://www.alphavantage.co/query"
 
 
+# Get hold of the API endpoint of Alphavantage.
 def get_stock_data():
     stock_api_key = os.environ.get("STOCK_API_KEY")
 
-    # Get hold of the API endpoint of Alphavantage.
     stock_params = {
         "function": "TIME_SERIES_DAILY",
         "symbol": STOCK_SYMBOL,
@@ -19,6 +19,7 @@ def get_stock_data():
     }
 
     stock_response = requests.get(STOCK_ENDPOINT, params=stock_params).json()
+
 # When using a wrong API key for the API endpoint of Alpha Vantage,
 # it currently returns still the status code 200.
 # The following workaround catches the wrong input as long as the stock_response contains the key 'Error Message'.
